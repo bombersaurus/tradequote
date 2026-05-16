@@ -9,11 +9,11 @@ type TemplatePickerProps = {
 
 export function TemplatePicker({ onApplyTemplate, onLoadExample }: TemplatePickerProps) {
   return (
-    <section className="panel" aria-labelledby="templates-heading">
+    <section className="panel template-panel" aria-labelledby="templates-heading">
       <div className="panel-heading">
         <div>
-          <p className="eyebrow">Templates</p>
-          <h2 id="templates-heading">Common electrical jobs</h2>
+          <p className="eyebrow">Optional</p>
+          <h2 id="templates-heading">Start from a template</h2>
         </div>
         <button className="text-button" type="button" onClick={() => onLoadExample(exampleQuotes[0])}>
           <ClipboardList size={16} />
@@ -21,7 +21,7 @@ export function TemplatePicker({ onApplyTemplate, onLoadExample }: TemplatePicke
         </button>
       </div>
 
-      <div className="template-list">
+      <div className="template-strip">
         {electricianTemplates.map((template) => (
           <button
             key={template.id}

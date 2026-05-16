@@ -113,7 +113,7 @@ button:disabled {
 }
 
 .topbar-status {
-  display: flex;
+  display: none;
   align-items: center;
   gap: 8px;
   padding: 8px 10px;
@@ -145,7 +145,7 @@ button:disabled {
 
 .builder-layout {
   display: grid;
-  grid-template-columns: minmax(420px, 720px) minmax(0, 1fr);
+  grid-template-columns: minmax(560px, 760px) minmax(520px, 1fr);
   grid-template-areas:
     "editor preview"
     "sidebar preview";
@@ -178,7 +178,7 @@ button:disabled {
   min-height: calc(100vh - 68px);
   align-content: start;
   justify-items: center;
-  padding: 40px 32px 56px;
+  padding: 28px 28px 48px;
   background: #ededed;
 }
 
@@ -197,7 +197,7 @@ button:disabled {
   justify-content: space-between;
   align-items: center;
   gap: 18px;
-  padding: 26px 28px 22px;
+  padding: 18px 28px;
   border-radius: 0;
   border: 0;
   border-bottom: 1px solid var(--line);
@@ -228,7 +228,7 @@ button:disabled {
 }
 
 .panel {
-  padding: 26px 28px;
+  padding: 20px 28px;
 }
 
 .panel-heading {
@@ -409,6 +409,7 @@ select:focus-visible {
 }
 
 .template-list,
+.template-strip,
 .saved-list {
   display: grid;
   gap: 8px;
@@ -416,6 +417,14 @@ select:focus-visible {
 
 .template-list {
   grid-template-columns: 1fr;
+}
+
+.template-panel {
+  padding-bottom: 16px;
+}
+
+.template-strip {
+  grid-template-columns: repeat(5, minmax(0, 1fr));
 }
 
 .template-card,
@@ -430,6 +439,16 @@ select:focus-visible {
   border: 1px solid var(--line);
   border-radius: var(--radius);
   background: #fbfcfe;
+}
+
+.template-strip .template-card {
+  align-items: flex-start;
+  min-height: 82px;
+  padding: 10px;
+}
+
+.template-strip .template-card small {
+  display: none;
 }
 
 .template-card:hover,
@@ -462,16 +481,17 @@ select:focus-visible {
 .line-table {
   display: grid;
   gap: 8px;
-  overflow-x: auto;
+  overflow: visible;
   max-width: 100%;
 }
 
 .line-row {
   display: grid;
-  grid-template-columns: minmax(220px, 1.7fr) 72px 100px 108px 64px 128px 96px 72px;
+  grid-template-columns: minmax(0, 1fr) 72px 112px 112px 54px 132px 90px 72px;
+  grid-template-areas: "description qty unit price vat category total actions";
   gap: 8px;
   align-items: start;
-  min-width: 840px;
+  min-width: 0;
   padding: 8px;
   border: 1px solid var(--line);
   border-radius: var(--radius);
@@ -487,6 +507,38 @@ select:focus-visible {
   font-size: 0.78rem;
   font-weight: 800;
   text-transform: uppercase;
+}
+
+.line-description {
+  grid-area: description;
+}
+
+.line-qty {
+  grid-area: qty;
+}
+
+.line-unit {
+  grid-area: unit;
+}
+
+.line-price {
+  grid-area: price;
+}
+
+.line-vat {
+  grid-area: vat;
+}
+
+.line-category {
+  grid-area: category;
+}
+
+.line-total {
+  grid-area: total;
+}
+
+.line-actions {
+  grid-area: actions;
 }
 
 .line-header span:nth-child(2),
@@ -515,6 +567,10 @@ select:focus-visible {
 .line-total {
   padding-top: 9px;
   text-align: right;
+}
+
+.compact-empty {
+  padding: 14px;
 }
 
 .totals-list,
@@ -635,7 +691,9 @@ select:focus-visible {
 }
 
 .quote-preview {
-  width: min(100%, 620px);
+  position: sticky;
+  top: 96px;
+  width: min(100%, 600px);
 }
 
 .pdf-preview {
@@ -668,7 +726,10 @@ select:focus-visible {
   display: inline-grid;
   grid-template-columns: repeat(3, minmax(0, auto));
   gap: 4px;
-  margin-bottom: 72px;
+  position: sticky;
+  top: 68px;
+  z-index: 10;
+  margin-bottom: 28px;
   padding: 5px;
   border-radius: 9px;
   background: #dedede;
@@ -883,7 +944,18 @@ select:focus-visible {
 
 @media (max-width: 1380px) {
   .builder-layout {
-    grid-template-columns: minmax(400px, 620px) minmax(0, 1fr);
+    grid-template-columns: minmax(520px, 680px) minmax(500px, 1fr);
+  }
+
+  .template-strip {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .line-row {
+    grid-template-columns: minmax(0, 1fr) 70px 104px 104px 54px 120px;
+    grid-template-areas:
+      "description qty unit price vat category"
+      "description total total total actions actions";
   }
 }
 
@@ -902,6 +974,11 @@ select:focus-visible {
 
   .preview-column {
     min-height: auto;
+  }
+
+  .quote-preview,
+  .preview-switch {
+    position: static;
   }
 }
 
@@ -963,6 +1040,10 @@ select:focus-visible {
     grid-template-columns: 1fr;
   }
 
+  .template-strip {
+    grid-template-columns: 1fr;
+  }
+
   .preview-column {
     padding: 24px 14px;
   }
@@ -988,6 +1069,12 @@ select:focus-visible {
 
   .line-row {
     grid-template-columns: 1fr 1fr;
+    grid-template-areas:
+      "description description"
+      "qty unit"
+      "price vat"
+      "category category"
+      "total actions";
     min-width: 0;
   }
 

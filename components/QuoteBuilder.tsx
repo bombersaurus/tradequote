@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { Download, Eye, RotateCcw, Save } from "lucide-react";
 import { calculateQuoteTotals } from "@/lib/calculations";
-import { createBlankQuote, exampleQuotes } from "@/lib/data";
+import { createBlankQuote } from "@/lib/data";
 import { exportQuotePdf } from "@/lib/pdf";
 import {
   hasPaidUnlock,
@@ -41,7 +41,7 @@ const previewModes: Array<{ id: PreviewMode; label: string }> = [
 ];
 
 export function QuoteBuilder() {
-  const [quote, setQuote] = useState<Quote>(() => exampleQuotes[0]);
+  const [quote, setQuote] = useState<Quote>(() => createBlankQuote());
   const [savedItems, setSavedItems] = useState<LineItem[]>([]);
   const [paidUnlocked, setPaidUnlockedState] = useState(false);
   const [notice, setNotice] = useState<string | null>(null);
@@ -51,8 +51,6 @@ export function QuoteBuilder() {
   const [showErrors, setShowErrors] = useState(false);
 
   useEffect(() => {
-    const draft = loadDraft();
-    if (draft) setQuote(draft);
     setSavedItems(loadSavedItems());
     setPaidUnlockedState(hasPaidUnlock());
   }, []);

@@ -43,7 +43,7 @@ export function LineItemTable({ items, savedItems, errors, onChange, onSaveItem 
   };
 
   const removeItem = (id: string) => {
-    onChange(items.length === 1 ? items : items.filter((item) => item.id !== id));
+    onChange(items.filter((item) => item.id !== id));
   };
 
   return (
@@ -90,7 +90,9 @@ export function LineItemTable({ items, savedItems, errors, onChange, onSaveItem 
         </div>
       </div>
 
-      <div className="line-table" role="table" aria-label="Quote line items">
+      {errors.lineItems ? <small className="error-text">{errors.lineItems}</small> : null}
+
+      <div className="line-table" aria-label="Quote line items">
         <div className="line-row line-header" role="row">
           <span>Description</span>
           <span>Qty</span>
@@ -102,9 +104,16 @@ export function LineItemTable({ items, savedItems, errors, onChange, onSaveItem 
           <span />
         </div>
 
+        {items.length === 0 ? (
+          <div className="empty-state compact-empty">
+            <strong>No line items yet</strong>
+            <p>Add a blank item or choose a saved starter item.</p>
+          </div>
+        ) : null}
+
         {items.map((item) => (
-          <div className="line-row" role="row" key={item.id}>
-            <label className="mobile-field">
+          <div className="line-row" key={item.id}>
+            <label className="mobile-field line-description">
               <span>Description</span>
               <input
                 value={item.description}
@@ -115,7 +124,7 @@ export function LineItemTable({ items, savedItems, errors, onChange, onSaveItem 
                 <small className="error-text">{errors[`item-${item.id}-description`]}</small>
               ) : null}
             </label>
-            <label className="mobile-field">
+            <label className="mobile-field line-qty">
               <span>Qty</span>
               <input
                 type="number"
@@ -125,7 +134,7 @@ export function LineItemTable({ items, savedItems, errors, onChange, onSaveItem 
                 onChange={(event) => updateItem(item.id, { quantity: Number(event.target.value) })}
               />
             </label>
-            <label className="mobile-field">
+            <label className="mobile-field line-unit">
               <span>Unit</span>
               <select value={item.unit} onChange={(event) => updateItem(item.id, { unit: event.target.value as Unit })}>
                 {units.map((unit) => (
@@ -133,7 +142,7 @@ export function LineItemTable({ items, savedItems, errors, onChange, onSaveItem 
                 ))}
               </select>
             </label>
-            <label className="mobile-field">
+            <label className="mobile-field line-price">
               <span>Unit price</span>
               <input
                 type="number"
@@ -143,7 +152,7 @@ export function LineItemTable({ items, savedItems, errors, onChange, onSaveItem 
                 onChange={(event) => updateItem(item.id, { unitPrice: Number(event.target.value) })}
               />
             </label>
-            <label className="switch-field">
+            <label className="switch-field line-vat">
               <span>VAT</span>
               <input
                 type="checkbox"
@@ -151,7 +160,7 @@ export function LineItemTable({ items, savedItems, errors, onChange, onSaveItem 
                 onChange={(event) => updateItem(item.id, { taxable: event.target.checked })}
               />
             </label>
-            <label className="mobile-field">
+            <label className="mobile-field line-category">
               <span>Category</span>
               <select
                 value={item.category}
@@ -163,7 +172,7 @@ export function LineItemTable({ items, savedItems, errors, onChange, onSaveItem 
               </select>
             </label>
             <strong className="line-total">{formatCurrency(lineItemTotal(item))}</strong>
-            <div className="icon-actions">
+            <div className="icon-actions line-actions">
               <button type="button" title="Save line item" onClick={() => onSaveItem(item)} className="icon-button">
                 <BookmarkPlus size={16} />
               </button>

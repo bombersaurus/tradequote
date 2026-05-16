@@ -11,6 +11,7 @@ export function validateQuote(quote: Quote): ValidationErrors {
   if (quote.depositPercent < 0 || quote.depositPercent > 100) {
     errors.depositPercent = "Deposit must be between 0 and 100%.";
   }
+  if (quote.lineItems.length === 0) errors.lineItems = "Add at least one line item.";
 
   quote.lineItems.forEach((item, index) => {
     if (!item.description.trim()) errors[`item-${item.id}-description`] = `Line ${index + 1} needs a description.`;

@@ -139,16 +139,6 @@ export function createBlankQuote(): Quote {
     notes: "Quote valid until the date shown. Work will be scheduled after deposit payment and written acceptance.",
     includeBranding: true,
     business: defaultBusiness,
-    lineItems: [
-      {
-        id: crypto.randomUUID(),
-        description: "",
-        quantity: 1,
-        unit: "item",
-        unitPrice: 0,
-        taxable: true,
-        category: "Materials",
-      },
-    ],
+    lineItems: [],
   };
 }
