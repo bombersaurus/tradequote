@@ -678,16 +678,41 @@ select:focus-visible {
 
 .option-list {
   display: grid;
-  gap: 10px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
 }
 
 .option-row {
-  padding: 10px 0;
-  border-bottom: 1px solid var(--line);
+  min-height: 58px;
+  padding: 8px 10px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: #fbfcfe;
 }
 
-.option-row:last-child {
-  border-bottom: 0;
+.option-row strong {
+  font-size: 0.9rem;
+}
+
+.option-row small {
+  font-size: 0.78rem;
+}
+
+.placeholder-line {
+  border-style: dashed;
+  background: #f7f8fa;
+  opacity: 0.82;
+}
+
+.placeholder-line input,
+.placeholder-line select {
+  color: var(--muted);
+  background: #eef1f5;
+}
+
+.placeholder-line .icon-button {
+  cursor: default;
+  opacity: 0.55;
 }
 
 .quote-preview {
@@ -719,6 +744,7 @@ select:focus-visible {
   box-shadow: var(--shadow);
   border: 0;
   border-radius: 12px;
+  min-height: 760px;
   min-width: 0;
 }
 
@@ -957,6 +983,19 @@ select:focus-visible {
       "description qty unit price vat category"
       "description total total total actions actions";
   }
+
+  .line-header {
+    display: none;
+  }
+
+  .mobile-field span {
+    display: block;
+    font-size: 0.73rem;
+  }
+
+  .switch-field {
+    justify-items: start;
+  }
 }
 
 @media (max-width: 1180px) {
@@ -1025,6 +1064,10 @@ select:focus-visible {
   .form-grid,
   .preview-meta,
   .preview-bottom {
+    grid-template-columns: 1fr;
+  }
+
+  .option-list {
     grid-template-columns: 1fr;
   }
 

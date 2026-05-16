@@ -105,9 +105,44 @@ export function LineItemTable({ items, savedItems, errors, onChange, onSaveItem 
         </div>
 
         {items.length === 0 ? (
-          <div className="empty-state compact-empty">
-            <strong>No line items yet</strong>
-            <p>Add a blank item or choose a saved starter item.</p>
+          <div className="line-row placeholder-line" aria-hidden="true">
+            <label className="mobile-field line-description">
+              <span>Description</span>
+              <input disabled placeholder="Supply and install..." />
+            </label>
+            <label className="mobile-field line-qty">
+              <span>Qty</span>
+              <input disabled placeholder="1" />
+            </label>
+            <label className="mobile-field line-unit">
+              <span>Unit</span>
+              <select disabled defaultValue="item">
+                <option>item</option>
+              </select>
+            </label>
+            <label className="mobile-field line-price">
+              <span>Unit price</span>
+              <input disabled placeholder="0.00" />
+            </label>
+            <label className="switch-field line-vat">
+              <span>VAT</span>
+              <input disabled type="checkbox" />
+            </label>
+            <label className="mobile-field line-category">
+              <span>Category</span>
+              <select disabled defaultValue="Materials">
+                <option>Materials</option>
+              </select>
+            </label>
+            <strong className="line-total">£0.00</strong>
+            <div className="icon-actions line-actions">
+              <button type="button" disabled className="icon-button">
+                <BookmarkPlus size={16} />
+              </button>
+              <button type="button" disabled className="icon-button danger">
+                <Trash2 size={16} />
+              </button>
+            </div>
           </div>
         ) : null}
 
