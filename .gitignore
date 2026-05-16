@@ -1,0 +1,12 @@
+node_modules
+.next
+out
+dist
+.env
+.env.local
+npm-debug.log*
+.DS_Store
+*.tsbuildinfo
+.gh-config
+.git2
+.vercel-data
