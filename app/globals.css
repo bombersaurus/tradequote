@@ -620,8 +620,39 @@ select:focus-visible {
   display: block;
 }
 
+.option-list {
+  display: grid;
+  gap: 10px;
+}
+
+.option-row {
+  padding: 10px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.option-row:last-child {
+  border-bottom: 0;
+}
+
 .quote-preview {
   width: min(100%, 620px);
+}
+
+.pdf-preview {
+  width: min(100%, 680px);
+}
+
+.preview-context {
+  display: grid;
+  gap: 3px;
+  margin-bottom: 12px;
+  color: var(--muted);
+  font-size: 0.86rem;
+  text-align: center;
+}
+
+.preview-context strong {
+  color: var(--ink);
 }
 
 .preview-paper {
@@ -733,6 +764,10 @@ select:focus-visible {
   font-size: 0.88rem;
 }
 
+.no-unit-prices .preview-line {
+  grid-template-columns: minmax(0, 1.8fr) 0.65fr 0.75fr;
+}
+
 .preview-line:first-child {
   border-top: 0;
 }
@@ -775,6 +810,75 @@ select:focus-visible {
   color: var(--muted);
   font-size: 0.78rem;
   text-align: center;
+}
+
+.acceptance-card {
+  padding: 36px;
+  border-radius: 12px;
+  background: #ffffff;
+  box-shadow: var(--shadow);
+}
+
+.acceptance-card h2 {
+  margin: 0;
+  font-size: 1.55rem;
+  line-height: 1.2;
+}
+
+.acceptance-muted,
+.acceptance-footnote {
+  color: var(--muted);
+}
+
+.acceptance-total {
+  display: grid;
+  gap: 5px;
+  margin: 26px 0;
+  padding: 22px;
+  border-radius: var(--radius);
+  background: var(--panel-muted);
+}
+
+.acceptance-total span,
+.acceptance-total small,
+.acceptance-summary span {
+  color: var(--muted);
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+.acceptance-total strong {
+  font-size: 2rem;
+}
+
+.acceptance-summary {
+  display: grid;
+  gap: 14px;
+  margin-bottom: 24px;
+}
+
+.acceptance-summary strong {
+  display: block;
+  margin-top: 3px;
+}
+
+.acceptance-actions {
+  display: grid;
+  gap: 10px;
+}
+
+.acceptance-actions button {
+  min-height: 44px;
+  border-radius: 7px;
+  border: 1px solid var(--line-strong);
+  background: #ffffff;
+  font-weight: 800;
+}
+
+.acceptance-actions button:first-child {
+  color: #ffffff;
+  border-color: var(--ink);
+  background: var(--ink);
 }
 
 @media (max-width: 1380px) {

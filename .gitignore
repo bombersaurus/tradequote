@@ -10,3 +10,5 @@ npm-debug.log*
 .gh-config
 .git2
 .vercel-data
+
+.vercel

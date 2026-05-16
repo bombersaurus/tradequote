@@ -67,4 +67,16 @@ export type QuoteTotals = {
   deposit: number;
 };
 
+export type QuoteDisplayOptions = {
+  showCustomerContact: boolean;
+  showJobAddress: boolean;
+  showUnitPrices: boolean;
+  showVatBreakdown: boolean;
+  showDeposit: boolean;
+  showNotes: boolean;
+  showBranding: boolean;
+};
+
+export type PreviewMode = "quote" | "acceptance" | "pdf";
+
 export type ValidationErrors = Record<string, string>;

@@ -14,14 +14,31 @@ import {
   setPaidUnlock,
 } from "@/lib/storage";
 import { firstError, validateQuote } from "@/lib/validation";
-import type { LineItem, Quote, QuoteTemplate } from "@/lib/types";
+import type { LineItem, PreviewMode, Quote, QuoteDisplayOptions, QuoteTemplate } from "@/lib/types";
 import { CommonItemsPanel } from "./CommonItemsPanel";
 import { LineItemTable } from "./LineItemTable";
 import { QuoteForm } from "./QuoteForm";
+import { QuoteOptionsPanel } from "./QuoteOptionsPanel";
 import { QuotePreview } from "./QuotePreview";
 import { TemplatePicker } from "./TemplatePicker";
 import { TotalsPanel } from "./TotalsPanel";
 import { UnlockPanel } from "./UnlockPanel";
+
+const defaultDisplayOptions: QuoteDisplayOptions = {
+  showCustomerContact: true,
+  showJobAddress: true,
+  showUnitPrices: true,
+  showVatBreakdown: true,
+  showDeposit: true,
+  showNotes: true,
+  showBranding: true,
+};
+
+const previewModes: Array<{ id: PreviewMode; label: string }> = [
+  { id: "quote", label: "Quote preview" },
+  { id: "acceptance", label: "Acceptance link" },
+  { id: "pdf", label: "Quote PDF" },
+];
 
 export function QuoteBuilder() {
   const [quote, setQuote] = useState<Quote>(() => exampleQuotes[0]);
@@ -29,6 +46,8 @@ export function QuoteBuilder() {
   const [paidUnlocked, setPaidUnlockedState] = useState(false);
   const [notice, setNotice] = useState<string | null>(null);
   const [previewOpen, setPreviewOpen] = useState(true);
+  const [previewMode, setPreviewMode] = useState<PreviewMode>("quote");
+  const [displayOptions, setDisplayOptions] = useState<QuoteDisplayOptions>(defaultDisplayOptions);
   const [showErrors, setShowErrors] = useState(false);
 
   useEffect(() => {
@@ -92,7 +111,7 @@ export function QuoteBuilder() {
       return;
     }
 
-    exportQuotePdf(quote, paidUnlocked);
+    exportQuotePdf(quote, paidUnlocked, displayOptions);
   };
 
   return (
@@ -131,6 +150,7 @@ export function QuoteBuilder() {
 
         <TemplatePicker onApplyTemplate={applyTemplate} onLoadExample={setQuote} />
         <QuoteForm quote={quote} errors={showErrors ? errors : {}} onChange={setQuote} />
+        <QuoteOptionsPanel options={displayOptions} onChange={setDisplayOptions} />
         <LineItemTable
           items={quote.lineItems}
           savedItems={savedItems}
@@ -164,13 +184,24 @@ export function QuoteBuilder() {
       {previewOpen ? (
         <div className="preview-column">
           <div className="preview-switch" aria-label="Preview mode">
-            <button className="active" type="button">
-              Quote preview
-            </button>
-            <button type="button">Acceptance link</button>
-            <button type="button">Quote PDF</button>
+            {previewModes.map((mode) => (
+              <button
+                className={previewMode === mode.id ? "active" : ""}
+                type="button"
+                key={mode.id}
+                onClick={() => setPreviewMode(mode.id)}
+              >
+                {mode.label}
+              </button>
+            ))}
           </div>
-          <QuotePreview quote={quote} totals={totals} paidUnlocked={paidUnlocked} />
+          <QuotePreview
+            mode={previewMode}
+            quote={quote}
+            totals={totals}
+            displayOptions={displayOptions}
+            paidUnlocked={paidUnlocked}
+          />
         </div>
       ) : null}
     </div>
